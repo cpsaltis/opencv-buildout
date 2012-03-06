@@ -10,12 +10,16 @@ To build pyopencv bindings for OpenCV run::
 
 To run the interpreter with pyopecncv support do::
 
-    LD_LIBRARY_PATH=/home/three/dev/pyopencv-buildout/parts/opencv/build/lib ./bin/cvpy
+    LD_LIBRARY_PATH=/home/three/dev/opencv-buildout/parts/opencv/build/lib ./bin/cvpy
 
 and in python::
 
     import pyopencv as cv
 
-To run the interpreter with the native python bindings copy parts/opencv/build/lib/python/dist-packages/cv.so and cv2.so to lib/python2.6/site-packages/ an then::
+To run the interpreter with the native python bindings copy opencv's dist-packages to the virtualenv's site-packages::
+
+    cp -r parts/opencv/build/lib/python/dist-packages/cv* lib/python2.6/site-packages/
+
+then from cvpy you can::
 
     import cv, cv2
