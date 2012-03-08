@@ -21,18 +21,20 @@ This is work in progress, so there are still dependencies on system packages and
 - not tested in systems without GTK,
 - it does not include TBB, IPP, Qt and CUDA toolkit,
 - for the pyopencv libboost is not build,
-- the envrinonment paths are not set automatically
+- the envrinonment paths are not set automatically,
+- how will the system numpy be exposed to the buildout, should it be compiled and add its dependencies here?
 
 Requirements
 ------------
 
-Before proceeding there are two basic packages you need to have. In Debian based systems these are install with::
+Before proceeding you'll need some basic packages. In Debian based systems install with::
 
-    $sudo aptitude install python-dev build-essential git-core
+    $sudo aptitude install build-essential python-dev python-numpy git
 
-If you need to use a virtual environement for your python you'll also need::
-
-    $sudo aptitude install python-virtualenv
+- build-essential contains the tools to build C/C++ code,
+- python-dev for building python eggs with C code inside,
+- numpy is a dependency for OpenCV python bindindings and for pyopencv. It is difficult to include it in the buildout since it requires a C and a FORTRAN compiler to build and has dependencies to LAPACK and ATLAS. Since it comes with binaries for a bunch of platforms is is easier to put is as a requirement. Refer to http://docs.scipy.org/doc/numpy/user/install.html for details on installing numpy.
+- git will be used to clone this repository so it is optional
 
 Installation
 ------------
@@ -41,21 +43,13 @@ Simply clone this repository and run buildout.::
 
     $git clone
     $cd opencv-buildout/
-
-If you want a virtualenv then::
-
-    opencv-buildout$virtualenv --no-site-packages --python=python2.6 .
-
-Supposing you created a virtualenv and you need the default bindings::
-
-    opencv-buildout$./bin/python bootstrap.py -c opencv.cfg
+    opencv-buildout$python bootstrap.py -c opencv.cfg
     opencv-buildout$./bin/buildout -v -c opencv.cfg
 
 If you need the pyopencv bindings::
 
     opencv-buildout$./bin/python bootstrap.py -c pyopencv.cfg
     opencv-buildout$./bin/buildout -v -c pyopencv.cfg
-
 
 Usage
 -----
